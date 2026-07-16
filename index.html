@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="bn"> <!-- ডকুমেন্টের ভাষা বাংলা সেট করা হয়েছে -->
+<head>
+		<meta charset="UTF-8"> <!-- ক্যারেক্টার এনকোডিং UTF-8 করা হয়েছে যাতে বাংলা ও অন্যান্য সিম্বল ঠিকঠাক দেখায় -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- রেসপনসিভ ভিউপোর্ট সেটআপ -->
+		<meta name="description" content="Countdown to the end of the world. Watch a thrilling and stunning 3D animation of the apocalypse and the ultimate destruction of this blue planet.">
+		<meta name="robots" content="index, follow">
+		<meta name="author" content="Imam">
+		<title>Iqtiraab</title>
+
+		<!-- ফেসবুক ও লিংকডইন শেয়ারিং (Open Graph Tags) -->
+		<meta property="og:title" content="Iqtiraab - Ultimate World Countdown">
+		<meta property="og:description" content="Countdown to the end of the world. Watch a thrilling and stunning 3D animation of the apocalypse.">
+		<meta property="og:image" content="https://yourdomain.com"> <!-- এখানে আপনার থিমের একটি চমৎকার ছবির লিংক দিন -->
+		<meta property="og:url" content="https://yourdomain.com">
+		<meta property="og:type" content="website">
+
+		<!-- টুইটার বা এক্স শেয়ারিং (Twitter Card Tags) -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Iqtiraab - Ultimate World Countdown">
+		<meta name="twitter:description" content="Countdown to the end of the world. Watch a thrilling and stunning 3D animation of the apocalypse.">
+		<meta name="twitter:image" content="https://yourdomain.com"> <!-- টুইটারের জন্য প্রিভিউ ইমেজ -->
+
+		<!-- ক্যানোনিকাল লিংক (ডুপ্লিকেট কনটেন্ট এড়াতে) -->
+		<link rel="canonical" href="https://yourdomain.com">
+		
+		<?php
+		header("ngrok-skip-browser-warning: any-value");
+		?>
+		
+    <style>
+        /* গ্লোবাল রিসেট: সব এলিমেন্টের ডিফল্ট মার্জিন, প্যাডিং এবং বক্স-সাইজিং ঠিক করা */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* মূল বডি বা ব্যাকগ্রাউন্ড স্টাইল */
+        body {
+            background-color: #050505; /* পুরো স্ক্রিন ডার্ক বা কালো ব্যাকগ্রাউন্ড */
+            height: 100vh; /* স্ক্রিনের সম্পূর্ণ উচ্চতা নেওয়া */
+            display: flex; /* ফ্লেক্সবক্স ব্যবহার করে কন্টেন্ট সেন্টারে আনা */
+            justify-content: center; /* হরাইজন্টালি সেন্টারে লক করা */
+            align-items: center; /* ভার্টিকালি সেন্টারে লক করা */
+            overflow: hidden; /* স্ক্রিনের বাইরে কোনো কন্টেন্ট স্ক্রোল হবে না */
+            font-family: 'Courier New', Courier, monospace; /* ঘড়ির জন্য টাইপরাইটার ফন্ট */
+        }
+
+        /* মূল কন্টেইনার যা ঘড়ি, পৃথিবী এবং সুতা ধরে রাখে */
+        .container {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        /* ব্লাস্টের সময় পুরো স্ক্রিন কাঁপানোর জন্য */
+        .shake-active {
+            animation: screen-shake 0.5s ease-out;
+        }
+
+        /* স্ক্রিন জোরেশোরে কাঁপানোর কী-ফ্রেম অ্যানিমেশন */
+        @keyframes screen-shake {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-10px, 8px) rotate(-1deg); }
+            20% { transform: translate(12px, -12px) rotate(1deg); }
+            30% { transform: translate(-15px, 10px); }
+            40% { transform: translate(10px, -8px) rotate(-1deg); }
+            50% { transform: translate(-8px, 12px) rotate(1deg); }
+            60% { transform: translate(12px, -10px); }
+            70% { transform: translate(-10px, 8px) rotate(-1deg); }
+            80% { transform: translate(8px, -8px); }
+            90% { transform: translate(-5px, 5px) rotate(1deg); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* বোমের আসল পাকানো রসি (Real Rope Fuse) */
+        .fuse {
+            position: absolute;
+            top: 70px; /* সুতার পজিশন পৃথিবীর মাথায় লক করা */
+            width: 8px; /* রসিটিকে বাস্তবসম্মত করতে সামান্য মোটা করা হলো */
+            height: 70px;
+            
+            /* রশির পাকানো প্যাটার্ন তৈরি করার আসল ম্যাজিক লাইন */
+            background: repeating-linear-gradient(
+                45deg,
+                #8b5a2b,        /* গাঢ় খয়েরি/পাটের রঙ */
+                #8b5a2b 3px,
+                #cd853f 3px,    /* হালকা সোনালী-বাদামী রঙ */
+                #cd853f 6px
+            );
+            
+            /* রসিটিকে ত্রিমাত্রিক (3D) দেখানোর জন্য শ্যাডো ইফেক্ট */
+            box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+            
+            border-radius: 3px;
+            transform-origin: bottom center;
+            transform: rotate(0deg);
+            z-index: 1;
+            animation: burn-fuse 60s linear forwards;
+        }
+
+        /* সুতা পুড়ার অ্যানিমেশন (পজিশন নিখুঁতভাবে সিঙ্ক করা হয়েছে) */
+        @keyframes burn-fuse {
+            0% {
+                height: 70px;
+                top: 70px;
+            }
+            100% {
+                height: 0px;
+                top: 140px; /* ৬০ সেকেন্ড পর সুতা পুড়ে শেষ হবে ঠিক পৃথিবীর মুখে */
+            }
+        }
+
+        /* সুতার মাথায় আগুন (Spark/Fire কন্টেইনার) */
+        .fire {
+            position: absolute;
+            top: -22px; 
+            left: -16px; 
+            width: 40px; 
+            height: 40px; 
+            pointer-events: none;
+            mix-blend-mode: screen; 
+            border-radius: 50%; 
+            
+            /* তীব্র আলোর গ্লো ইফেক্ট */
+            box-shadow: 0 0 20px #ffe664, 0 0 40px #ff8c00, 0 0 60px #ff3300; 
+            
+            /* ইমেজের কালো বর্ডার কাটার মাস্ক */
+            clip-path: circle(42%);
+            
+            /* ইমেজের অপাসিটি কমানো হলো কিন্তু আলো থাকবে ফুল ব্রাইট */
+            filter: opacity(1); 
+            opacity: 1; 
+        }
+
+        /* পৃথিবী (GIF Wrapper) */
+        .earth-wrapper {
+            position: relative;
+            width: 310px;
+            height: 310px;
+            border-radius: 50%;
+            box-shadow: 0 0 100px rgba(1, 150, 255, 0.6), inset 0 0 100px rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        /* পৃথিবী ইমেজ */
+        .earth-gif {
+            width: 115%;
+            height: 115%;
+            border-radius: 50%;
+            object-fit: cover;
+            pointer-events: none;
+            
+            /* বৃত্তাকার মাস্ক দিয়ে ভেতরের অংশ কেটে নেওয়া */
+            clip-path: circle(44%); 
+        }
+
+        /* মাঝখানের ঘড়ি */
+        .clock {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.82);
+            color: #00ffcc;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 18px rgba(0, 255, 204, 0.5);
+            text-shadow: 0 0 5px #00ffcc;
+            z-index: 3;
+            pointer-events: none;
+            transition: transform 0.3s ease, opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* ঘড়ির সময় */
+        .clock-time {
+            font-size: 1.6rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        /* ঘড়ির তারিখ */
+        .clock-date {
+            font-size: 0.85rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+            color: #00ffccbb;
+        }
+
+        /* বিস্ফোরণ ইফেক্ট ওভারলে */
+        .explosion {
+            position: absolute;
+            left: 50%; 
+            top: 50%; 
+            transform: translate(-50%, -50%) scale(0); 
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #fff 10%, #ffcc00 30%, #ff3300 60%, rgba(0,0,0,0) 80%);
+            border-radius: 50%;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* ব্লাস্ট শুরু করার একটিভ ক্লাস */
+        .explode-active {
+            animation: blast-shockwave 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        /* ব্লাস্ট শকওয়েভ বড় হয়ে মিলিয়ে যাওয়ার অ্যানিমেশন */
+        @keyframes blast-shockwave {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+                box-shadow: 0 0 50px #ff3300;
+            }
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 200px #ff6600, 0 0 400px #ff3300;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(50); 
+                opacity: 0;
+            }
+        }
+
+        /* পৃথিবীর ৭টি টুকরোর মূল কন্টেইনার */
+        .shattered-earth {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            bottom: 30px; /* পজিশন সামঞ্জস্য করা হয়েছে */
+            display: none; 
+            z-index: 5;
+        }
+
+        /* প্রতিটি টুকরোর সাধারণ সিএসএস */
+        .piece {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('Rotating_earth_animated.gif') no-repeat center;
+            background-size: cover;
+            border-radius: 50%;
+            filter: brightness(1.5) contrast(1.2);
+        }
+
+        /* সিএসএস ক্লিপ-পাথ দিয়ে আস্ত পৃথিবীকে সমান ৭টি ভাগে বিভক্ত করা */
+        .p1 { clip-path: polygon(50% 50%, 50% 0%, 90% 10%); }
+        .p2 { clip-path: polygon(50% 50%, 90% 10%, 100% 50%); }
+        .p3 { clip-path: polygon(50% 50%, 100% 50%, 80% 90%); }
+        .p4 { clip-path: polygon(50% 50%, 80% 90%, 40% 100%); }
+        .p5 { clip-path: polygon(50% 50%, 40% 100%, 0% 70%); }
+        .p6 { clip-path: polygon(50% 50%, 0% 70%, 0% 25%); }
+        .p7 { clip-path: polygon(50% 50%, 0% 25%, 50% 0%); }
+
+        /* বিস্ফোরণের পর টুকরোগুলো ৭টি ভিন্ন ভিন্ন কোণে ছিটকে উড়ে হারিয়ে যাবে */
+        .blast-pieces .p1 { animation: scatter1 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p2 { animation: scatter2 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p3 { animation: scatter3 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p4 { animation: scatter4 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p5 { animation: scatter5 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p6 { animation: scatter6 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .blast-pieces .p7 { animation: scatter7 1.2s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+
+        /* ৭টি টুকরো ছিটকে যাওয়ার কোণ এবং রোটেশন */
+        @keyframes scatter1 { 100% { transform: translate(150px, -250px) rotate(120deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter2 { 100% { transform: translate(300px, -8px) rotate(-180deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter3 { 100% { transform: translate(200px, 250px) rotate(220deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter4 { 100% { transform: translate(-50px, 300px) rotate(-90deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter5 { 100% { transform: translate(-250px, 180px) rotate(140deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter6 { 100% { transform: translate(-300px, -100px) rotate(-200deg) scale(0); opacity: 0; filter: brightness(3); } }
+        @keyframes scatter7 { 100% { transform: translate(-100px, -280px) rotate(85deg) scale(0); opacity: 0; filter: brightness(3); } }
+
+        /* রিস্টার্ট বাটন */
+        .restart-btn {
+            position: absolute;
+            bottom: 20px;
+            background: #ff3300;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff3300;
+            display: none;
+            z-index: 100;
+            font-family: inherit;
+            text-transform: uppercase;
+        }
+
+        .restart-btn:hover {
+            background: #ff6600;
+            box-shadow: 0 0 25px #ff6600;
+        }
+    </style>
+</head>
+<body id="main-body">
+
+    <div class="container">
+        <!-- সুতা এবং স্পার্ক ইমেজ -->
+        <div class="fuse" id="fuse-element">
+            <img class="fire" id="fire-element" src="spark.gif" alt="Spark Fire">
+        </div>
+
+        <!-- ৩ডি পৃথিবী এবং ঘড়ি -->
+        <div class="earth-wrapper" id="earth-wrapper-element">
+            <img class="earth-gif" src="6.47MBRotating_earth_animated.gif" alt="Rotating Earth">
+            <div class="clock" id="digital-clock">
+                <div class="clock-time" id="clock-time-element">00.00.00 PM</div>
+                <div class="clock-date" id="clock-date-element">Wednesday, July 15, 2026</div>
+            </div>
+        </div>
+
+        <!-- পৃথিবীর ব্লাস্ট হওয়ার পর ৭টি টুকরা প্রদর্শনের কন্টেইনার -->
+        <div class="shattered-earth" id="shattered-container">
+            <div class="piece p1"></div>
+            <div class="piece p2"></div>
+            <div class="piece p3"></div>
+            <div class="piece p4"></div>
+            <div class="piece p5"></div>
+            <div class="piece p6"></div>
+            <div class="piece p7"></div>
+        </div>
+
+        <!-- বিস্ফোরণ ইফেক্ট ওভারলে -->
+        <div class="explosion" id="explosion-element"></div>
+    </div>
+
+    <button class="restart-btn" id="restart-btn" onclick="resetBomb()">আবার শুরু করুন</button>
+
+    <script>
+        function updateClock() {
+            const timeElement = document.getElementById('clock-time-element');
+            const dateElement = document.getElementById('clock-date-element');
+            const now = new Date();
+            
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timeElement.textContent = `${hours}.${minutes}.${seconds} ${ampm}`;
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-US', options);
+            dateElement.textContent = dateString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); 
+
+        const totalBurnTime = 60000; 
+        setTimeout(triggerBlast, totalBurnTime);
+
+        function triggerBlast() {
+            const body = document.getElementById('main-body');
+            const fuse = document.getElementById('fuse-element');
+            const fire = document.getElementById('fire-element');
+            const earth = document.getElementById('earth-wrapper-element');
+            const shatteredContainer = document.getElementById('shattered-container');
+            const explosion = document.getElementById('explosion-element');
+            const restartBtn = document.getElementById('restart-btn');
+
+            if (fire) fire.style.display = 'none';
+            if (fuse) fuse.style.display = 'none';
+
+            body.classList.add('shake-active');
+
+            earth.style.display = 'none';
+            shatteredContainer.style.display = 'block';
+            shatteredContainer.classList.add('blast-pieces');
+
+            explosion.classList.add('explode-active');
+
+            setTimeout(() => {
+                body.classList.remove('shake-active');
+                restartBtn.style.display = 'block';
+            }, 1200);
+        }
+
+        function resetBomb() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
